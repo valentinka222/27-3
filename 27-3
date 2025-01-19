@@ -1,0 +1,29 @@
+#3 Разделение кластеров по блеску(3-е значение)
+f = open('27__4x6s7.txt')
+a = [[] for i in range(4)]
+for i in f:
+    x, y, r = map(float, i.split()) #r - значение, по которому мы распределяем звезды
+    if r <= 5:
+        a[0].append([x, y]) # в дальнейшем он нам не нужен
+    elif r <= 10:
+        a[1].append([x, y])
+    elif r <= 15:
+        a[2].append([x, y])
+    else:
+        a[3].append([x, y])
+# дальше все то же самое
+sx=sy=0
+for one in range(4):
+    mn = 100000000000050000000000000
+    for two in range(len(a[one])):
+        ls = 0
+        x1, y1 = a[one][two]
+        for three in range(len(a[one])):
+            x2,y2=a[one][three]
+            ls += ((x2-x1)**2 + (y2-y1)**2)**0.5
+        if ls < mn:
+            mn = ls
+            t = a[one][two]
+    sx += t[0]
+    sy += t[1]
+print(int(sx/4*10000), int(sy/4*10000))
